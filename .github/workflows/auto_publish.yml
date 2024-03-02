@@ -1,5 +1,5 @@
-# This workflow publishes the extension to the VSCode marketplace when the version changes.
-name: Publish to VSCode Marketplace
+# This workflow publishes the extension to the Coc marketplace when the version changes.
+name: Publish to Coc Marketplace
 on:
   # Run whenever a new commit is pushed to the main branch.
   push:
@@ -26,4 +26,6 @@ jobs:
       # The token will be expired in on 08/03/2022.
       run: |
         npm install
-        npm run publish -- -p "${{ secrets.VSCODE_MARKETPLACE_TOKEN }}"
+        npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
