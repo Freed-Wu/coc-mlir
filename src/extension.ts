@@ -1,8 +1,9 @@
-import * as vscode from 'vscode';
+import * as vscode from 'coc.nvim';
 
-import {registerMLIRExtensions} from './MLIR/mlir';
+// import {registerMLIRExtensions} from './MLIR/mlir';
 import {MLIRContext} from './mlirContext';
-import {registerPDLLExtensions} from './PDLL/pdll';
+// TODO: https://github.com/neoclide/coc.nvim/discussions/4918
+// import {registerPDLLExtensions} from './PDLL/pdll';
 
 /**
  *  This method is called when the extension is activated. The extension is
@@ -22,8 +23,8 @@ export function activate(context: vscode.ExtensionContext) {
         mlirContext.dispose();
         await mlirContext.activate(outputChannel);
       }));
-  registerMLIRExtensions(context, mlirContext);
-  registerPDLLExtensions(context, mlirContext);
+  // registerMLIRExtensions(context, mlirContext);
+  // registerPDLLExtensions(context, mlirContext);
 
   mlirContext.activate(outputChannel);
 }

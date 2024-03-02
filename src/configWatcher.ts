@@ -1,5 +1,5 @@
 import * as chokidar from 'chokidar';
-import * as vscode from 'vscode';
+import * as vscode from 'coc.nvim';
 
 import * as config from './config';
 import {MLIRContext} from './mlirContext';
@@ -71,15 +71,16 @@ export async function activate(
     }
 
     // If the server path actually exists, track it in case it changes.
-    const fileWatcher = chokidar.watch(serverPath, fileWatcherConfig);
-    fileWatcher.on('all', (event, _filename, _details) => {
-      if (event != 'unlink') {
-        promptRestart(
-            'onSettingsChanged',
-            'MLIR language server file has changed. Do you want to reload the server?');
-      }
-    });
-    mlirContext.subscriptions.push(
-        new vscode.Disposable(() => { fileWatcher.close(); }));
+    // TODO: coc.nvim doesn't have this API
+    // const fileWatcher = chokidar.watch(serverPath, fileWatcherConfig);
+    // fileWatcher.on('all', (event, _filename, _details) => {
+    //   if (event != 'unlink') {
+    //     promptRestart(
+    //         'onSettingsChanged',
+    //         'MLIR language server file has changed. Do you want to reload the server?');
+    //   }
+    // });
+    // mlirContext.subscriptions.push(
+    //     new vscode.Disposable(() => { fileWatcher.close(); }));
   }
 }

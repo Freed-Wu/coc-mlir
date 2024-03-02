@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import * as vscode from 'coc.nvim';
 
 /**
  *  Gets the config value `mlir.<key>`, with an optional workspace folder.

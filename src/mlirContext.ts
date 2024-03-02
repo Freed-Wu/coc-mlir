@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as vscode from 'vscode';
-import * as vscodelc from 'vscode-languageclient/node';
+import * as vscode from 'coc.nvim';
+import * as vscodelc from 'coc.nvim';
 
 import * as config from './config';
 import * as configWatcher from './configWatcher';
@@ -37,7 +37,7 @@ export class MLIRContext implements vscode.Disposable {
     // document. It removes the need to pro-actively start language clients for
     // every folder within the workspace and every language type we provide.
     const startClientOnOpenDocument = async (document: vscode.TextDocument) => {
-      await this.getOrActivateLanguageClient(document.uri, document.languageId);
+      await this.getOrActivateLanguageClient(vscode.Uri.parse(document.uri), document.languageId);
     };
     // Process any existing documents.
     for (const textDoc of vscode.workspace.textDocuments) {
@@ -118,7 +118,7 @@ export class MLIRContext implements vscode.Disposable {
     // 'build' directory within the current workspace.
     if (databases.length === 0) {
       if (workspaceFolder) {
-        databases.push(workspaceFolder.uri.fsPath +
+        databases.push(vscode.Uri.parse(workspaceFolder.uri).fsPath +
                        `/build/${languageName}_compile_commands.yml`);
       }
 
@@ -252,7 +252,7 @@ export class MLIRContext implements vscode.Disposable {
     let selectorPattern: string = null;
     if (workspaceFolder) {
       filePattern = new vscode.RelativePattern(workspaceFolder, filePattern);
-      selectorPattern = `${workspaceFolder.uri.fsPath}/**/*`;
+      selectorPattern = `${vscode.Uri.parse(workspaceFolder.uri).fsPath}/**/*`;
     }
 
     // Configure the middleware of the client. This is sort of abused to allow
