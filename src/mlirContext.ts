@@ -224,23 +224,6 @@ export class MLIRContext implements vscode.Disposable {
       return [ null, serverPath ];
     }
 
-    // Check that the file actually exists.
-    if (!fs.existsSync(serverPath)) {
-      vscode.window
-          .showErrorMessage(
-              `${clientTitle}: Unable to resolve path for '${
-                  serverSettingName}', please ensure the path is correct`,
-              "Open Setting")
-          .then((value) => {
-            if (value === "Open Setting") {
-              vscode.commands.executeCommand(
-                  'workbench.action.openWorkspaceSettings',
-                  {openToSide : false, query : `mlir.${serverSettingName}`});
-            }
-          });
-      return [ null, serverPath ];
-    }
-
     // Configure the server options.
     const serverOptions: vscodelc.ServerOptions = {
       command : serverPath,
@@ -334,7 +317,7 @@ export class MLIRContext implements vscode.Disposable {
       if (defaultPath === '') {
         return filePath;
       }
-      filePath = defaultPath;
+      return defaultPath;
 
       // Fallthrough to try resolving the default path.
     }
